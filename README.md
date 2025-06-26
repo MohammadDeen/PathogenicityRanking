@@ -2,7 +2,7 @@
 # PathogenicityRanking
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/YOUR_USERNAME/PathogenicityRanking/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/YOUR_USERNAME/PathogenicityRanking/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/MohammadDeen/PathogenicityRanking/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MohammadDeen/PathogenicityRanking/actions/workflows/R-CMD-check.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
@@ -17,7 +17,7 @@ You can install the development version from GitHub:
 install.packages("devtools")
 
 # Install PathogenicityRanking
-devtools::install_github("YOUR_USERNAME/PathogenicityRanking")
+devtools::install_github("MohammadDeen/PathogenicityRanking")
 ```
 
 ## Quick Start
