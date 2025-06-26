@@ -1,9 +1,38 @@
 
+# PathogenicityRanking
+
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/YOUR_USERNAME/PathogenicityRanking/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/YOUR_USERNAME/PathogenicityRanking/actions/workflows/R-CMD-check.yaml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
-# Pathogenicity Ranking Project
+An R package for computing composite pathogenicity scores to rank missense variants using multiple predictors like AlphaMissense, CADD, GERP++, and others.
+
+## Installation
+
+You can install the development version from GitHub:
+
+```r
+# Install devtools if you haven't already
+install.packages("devtools")
+
+# Install PathogenicityRanking
+devtools::install_github("YOUR_USERNAME/PathogenicityRanking")
+```
+
+## Quick Start
+
+```r
+library(PathogenicityRanking)
+
+# Run analysis on your variant file
+results <- run_pathogenicity_analysis(
+  input_file = "your_variants.xlsx",
+  pdf_output = "pathogenicity_ranking.pdf", 
+  png_output = "pathogenicity_ranking.png",
+  show_plot = TRUE
+)
+```
 
 This project provides a reusable R function to evaluate and rank missense variants based on a composite pathogenicity score derived from multiple predictors.
 
