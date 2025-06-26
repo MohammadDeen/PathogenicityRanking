@@ -8,4 +8,4 @@ Description: Computes and visualizes a composite score to rank missense variants
 License: MIT
 Encoding: UTF-8
 LazyData: true
-Imports: dplyr, ggplot2, readr, readxl, fs
+Imports: dplyr, ggplot2, readr, readxl, fs, tidyr
