@@ -1,0 +1,1248 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  11pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{float}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{PathogenicityRanking Documentation}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{Mohammad Deen Hayatu - June 2025}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={PathogenicityRanking R Package Documentation},
+  pdfauthor={Mohammad Deen Hayatu},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{PathogenicityRanking R Package Documentation}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Complete Setup and Implementation Guide}
+\author{Mohammad Deen Hayatu}
+\date{2025-06-26}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\newpage
+
+\section{Project Overview}\label{project-overview}
+
+\subsection{Package Information}\label{package-information}
+
+\textbf{Package Name}: PathogenicityRanking\\
+\textbf{Purpose}: R package for computing composite pathogenicity scores
+to rank missense variants\\
+\textbf{Author}: Mohammad Deen Hayatu\\
+\textbf{GitHub Repository}:
+\url{https://github.com/MohammadDeen/PathogenicityRanking}\\
+\textbf{License}: MIT\\
+\textbf{Version}: 0.1.0\\
+\textbf{Date Created}: June 26, 2025
+
+\subsection{Abstract}\label{abstract}
+
+The PathogenicityRanking package provides a comprehensive solution for
+evaluating and ranking missense variants based on composite
+pathogenicity scores derived from multiple predictors including
+AlphaMissense, CADD, GERP++, phyloP, MPC, REVEL, and MetaSVM scores.
+This package streamlines the variant analysis workflow by automating
+data processing, score normalization, composite scoring, and
+visualization generation.
+
+\newpage
+
+\section{Repository Structure}\label{repository-structure}
+
+The PathogenicityRanking repository follows standard R package
+conventions with additional GitHub integration features:
+
+\begin{verbatim}
+PathogenicityRanking/
+├── .github/
+│   └── workflows/
+│       └── R-CMD-check.yaml          # GitHub Actions CI/CD workflow
+├── R/
+│   └── run_pathogenicity_analysis.R  # Main function implementation
+├── vignettes/
+│   └── PathogenicityRankingTutorial.Rmd  # Package tutorial
+├── docs/                             # pkgdown documentation site
+├── .gitignore                        # Git ignore rules for R packages
+├── DESCRIPTION                       # Package metadata and dependencies
+├── LICENSE                           # MIT license file
+├── NAMESPACE                         # Package exports
+├── README.md                         # Main documentation and usage
+├── index.md                          # Package index
+└── pkgdown.yml                       # pkgdown configuration
+\end{verbatim}
+
+\subsection{Key Files Description}\label{key-files-description}
+
+\subsubsection{DESCRIPTION File}\label{description-file}
+
+Contains package metadata, dependencies, and licensing information
+following R package standards.
+
+\subsubsection{NAMESPACE File}\label{namespace-file}
+
+Exports the main function \texttt{run\_pathogenicity\_analysis()} for
+public use.
+
+\subsubsection{README.md}\label{readme.md}
+
+Comprehensive documentation including installation instructions, usage
+examples, and GitHub badges for CI status and licensing.
+
+\newpage
+
+\section{Package Components}\label{package-components}
+
+\subsection{Main Function:
+run\_pathogenicity\_analysis()}\label{main-function-run_pathogenicity_analysis}
+
+\subsubsection{Function Signature}\label{function-signature}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{run\_pathogenicity\_analysis}\NormalTok{(input\_file, pdf\_output, png\_output, }\AttributeTok{show\_plot =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Parameters}\label{parameters}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Parameter
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Type
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{input\_file} & character & Path to input variant file (.csv,
+.txt, .xlsx) \\
+\texttt{pdf\_output} & character & Output filename for PDF plot \\
+\texttt{png\_output} & character & Output filename for PNG plot \\
+\texttt{show\_plot} & logical & Whether to display plot in RStudio
+(default: TRUE) \\
+\end{longtable}
+
+\subsubsection{Required Input Columns}\label{required-input-columns}
+
+The input file must contain the following columns with exact naming:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{AAChange.refGeneWithVer} - Amino acid change annotation
+\item
+  \texttt{AlphaMissense\_score} - AlphaMissense pathogenicity score
+\item
+  \texttt{CADD\_phred} - CADD Phred-scaled score
+\item
+  \texttt{GERP++\_RS} - GERP++ rejection substitution score
+\item
+  \texttt{phyloP17way\_primate} - PhyloP conservation score
+\item
+  \texttt{MPC\_score} - Missense badness, PolyPhen-2, and Constraint
+  score
+\item
+  \texttt{REVEL\_score} - Rare Exome Variant Ensemble Learner score
+\item
+  \texttt{MetaSVM\_score} - MetaSVM pathogenicity prediction score
+\end{enumerate}
+
+\subsubsection{Function Workflow}\label{function-workflow}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{File Validation}: Checks file existence and format support
+\item
+  \textbf{Data Loading}: Reads CSV, TXT, or XLSX files using appropriate
+  libraries
+\item
+  \textbf{Column Selection}: Extracts required columns and renames for
+  processing
+\item
+  \textbf{Data Filtering}: Removes variants with missing AlphaMissense
+  or CADD scores
+\item
+  \textbf{Score Normalization}: Normalizes each score to 0-1 range using
+  max normalization
+\item
+  \textbf{Composite Scoring}: Calculates mean of normalized scores per
+  variant
+\item
+  \textbf{Ranking}: Sorts variants by composite score in descending
+  order
+\item
+  \textbf{Visualization}: Creates horizontal bar chart with professional
+  styling
+\item
+  \textbf{Export}: Saves results as CSV and plots in PDF/PNG formats
+\end{enumerate}
+
+\subsubsection{Return Value}\label{return-value}
+
+Returns a data frame containing: - Original variant identifiers -
+Normalized individual scores - Composite pathogenicity scores - Variants
+sorted by composite score (highest to lowest)
+
+\newpage
+
+\section{Dependencies}\label{dependencies}
+
+\subsection{Required R Packages}\label{required-r-packages}
+
+The PathogenicityRanking package depends on the following R packages:
+
+\subsubsection{Core Dependencies}\label{core-dependencies}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{dplyr} (\textgreater= 1.0.0): Data manipulation and
+  transformation
+\item
+  \textbf{ggplot2} (\textgreater= 3.0.0): Data visualization and
+  plotting
+\item
+  \textbf{readr} (\textgreater= 2.0.0): Fast and friendly CSV file
+  reading
+\item
+  \textbf{readxl} (\textgreater= 1.3.0): Excel file reading capabilities
+\item
+  \textbf{fs} (\textgreater= 1.5.0): Cross-platform file system
+  operations
+\end{itemize}
+
+\subsubsection{Dependency Installation}\label{dependency-installation}
+
+These dependencies are automatically installed when the package is
+installed via \texttt{devtools::install\_github()}.
+
+\subsection{System Requirements}\label{system-requirements}
+
+\begin{itemize}
+\tightlist
+\item
+  R version \textgreater= 4.0.0
+\item
+  Operating System: Windows, macOS, or Linux
+\item
+  Memory: Minimum 4GB RAM recommended for large datasets
+\end{itemize}
+
+\newpage
+
+\section{Git and GitHub Setup}\label{git-and-github-setup}
+
+\subsection{Git Repository
+Initialization}\label{git-repository-initialization}
+
+The local Git repository was initialized with standard R package
+structure:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git}\NormalTok{ init}
+\FunctionTok{git}\NormalTok{ add .}
+\FunctionTok{git}\NormalTok{ commit }\AttributeTok{{-}m} \StringTok{"Initial commit: PathogenicityRanking R package"}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{GitHub Repository
+Configuration}\label{github-repository-configuration}
+
+\subsubsection{Repository Details}\label{repository-details}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Account}: MohammadDeen
+\item
+  \textbf{Repository Name}: PathogenicityRanking
+\item
+  \textbf{Visibility}: Public
+\item
+  \textbf{URL}:
+  \url{https://github.com/MohammadDeen/PathogenicityRanking}
+\item
+  \textbf{Description}: ``R package for composite pathogenicity scoring
+  of missense variants''
+\end{itemize}
+
+\subsubsection{Branch Structure}\label{branch-structure}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Main Branch}: \texttt{main}
+\item
+  \textbf{Default Branch}: \texttt{main}
+\item
+  \textbf{Protection Rules}: None (open for contributions)
+\end{itemize}
+
+\subsection{Authentication Setup}\label{authentication-setup}
+
+\subsubsection{SSH Key Configuration}\label{ssh-key-configuration}
+
+A dedicated SSH key was generated for secure authentication:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Key generation}
+\FunctionTok{ssh{-}keygen} \AttributeTok{{-}t}\NormalTok{ ed25519 }\AttributeTok{{-}C} \StringTok{"mohammaddeenhayatu@gmail.com"}
+\CommentTok{\# Key name: pathorankinssh}
+
+\CommentTok{\# SSH agent configuration}
+\BuiltInTok{eval} \StringTok{"}\VariableTok{$(}\FunctionTok{ssh{-}agent} \AttributeTok{{-}s}\VariableTok{)}\StringTok{"}
+\FunctionTok{ssh{-}add}\NormalTok{ pathorankinssh}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Public Key} (added to GitHub account):
+
+\begin{verbatim}
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFi03GKv01TM0c4q391YoDdOgFffeYlIKP2eZj/KUKFz mohammaddeenhayatu@gmail.com
+\end{verbatim}
+
+\subsubsection{Remote URL Configuration}\label{remote-url-configuration}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# SSH{-}based remote URL}
+\FunctionTok{git}\NormalTok{ remote set{-}url origin git@github.com:MohammadDeen/PathogenicityRanking.git}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Authentication
+Verification}\label{authentication-verification}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ssh} \AttributeTok{{-}T}\NormalTok{ git@github.com}
+\CommentTok{\# Successful result: "Hi MohammadDeen! You\textquotesingle{}ve successfully authenticated"}
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\section{Documentation}\label{documentation}
+
+\subsection{README.md Features}\label{readme.md-features}
+
+The README.md file provides comprehensive package documentation
+including:
+
+\subsubsection{Content Sections}\label{content-sections}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Package Title and Badges}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    GitHub Actions CI/CD status badge
+  \item
+    MIT License badge
+  \item
+    Professional formatting
+  \end{itemize}
+\item
+  \textbf{Installation Instructions}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    devtools installation via GitHub
+  \item
+    Dependency management
+  \item
+    Quick start example
+  \end{itemize}
+\item
+  \textbf{Function Documentation}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Parameter descriptions
+  \item
+    Required input format
+  \item
+    Output specifications
+  \end{itemize}
+\item
+  \textbf{Usage Examples}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Basic function call
+  \item
+    Parameter configuration
+  \item
+    Expected outputs
+  \end{itemize}
+\end{enumerate}
+
+\subsubsection{GitHub Badges}\label{github-badges}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{[}\AlertTok{![R{-}CMD{-}check](https://github.com/MohammadDeen/PathogenicityRanking/actions/workflows/R{-}CMD{-}check.yaml/badge.svg)}\CommentTok{](https://github.com/MohammadDeen/PathogenicityRanking/actions/workflows/R{-}CMD{-}check.yaml)}
+\CommentTok{[}\AlertTok{![License: MIT](https://img.shields.io/badge/License{-}MIT{-}yellow.svg)}\CommentTok{](https://opensource.org/licenses/MIT)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Vignette Documentation}\label{vignette-documentation}
+
+\subsubsection{File Location}\label{file-location}
+
+\texttt{vignettes/PathogenicityRankingTutorial.Rmd}
+
+\subsubsection{Content Structure}\label{content-structure}
+
+\begin{itemize}
+\tightlist
+\item
+  Package overview and purpose
+\item
+  Installation and loading instructions
+\item
+  Detailed usage examples
+\item
+  Best practices and recommendations
+\end{itemize}
+
+\subsubsection{Output Format}\label{output-format}
+
+\begin{itemize}
+\tightlist
+\item
+  HTML vignette for web viewing
+\item
+  Integration with R package documentation system
+\end{itemize}
+
+\subsection{License Documentation}\label{license-documentation}
+
+\subsubsection{License Type}\label{license-type}
+
+MIT License - permissive open-source license
+
+\subsubsection{License Terms}\label{license-terms}
+
+\begin{itemize}
+\tightlist
+\item
+  Commercial use permitted
+\item
+  Modification permitted
+\item
+  Distribution permitted
+\item
+  Private use permitted
+\item
+  Liability limitations
+\item
+  Warranty disclaimers
+\end{itemize}
+
+\newpage
+
+\section{Continuous Integration}\label{continuous-integration}
+
+\subsection{GitHub Actions Workflow}\label{github-actions-workflow}
+
+\subsubsection{Configuration File}\label{configuration-file}
+
+\texttt{.github/workflows/R-CMD-check.yaml}
+
+\subsubsection{Workflow Triggers}\label{workflow-triggers}
+
+\begin{itemize}
+\tightlist
+\item
+  Push events to main branch
+\item
+  Pull request events to main branch
+\item
+  Manual workflow dispatch
+\end{itemize}
+
+\subsubsection{Build Matrix}\label{build-matrix}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Platform}: Ubuntu Latest
+\item
+  \textbf{R Version}: Release
+\item
+  \textbf{Package Check}: R CMD check with CRAN standards
+\end{itemize}
+
+\subsubsection{Workflow Steps}\label{workflow-steps}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Checkout Code}: Uses
+  \href{mailto:actions/checkout@v3}{\nolinkurl{actions/checkout@v3}}
+\item
+  \textbf{Setup R Environment}: Uses
+  \href{mailto:r-lib/actions/setup-r@v2}{\nolinkurl{r-lib/actions/setup-r@v2}}
+\item
+  \textbf{Install System Dependencies}: Ubuntu package installation
+\item
+  \textbf{Install R Dependencies}: Automatic dependency resolution
+\item
+  \textbf{Package Build}: R CMD build execution
+\item
+  \textbf{Package Check}: R CMD check with --no-manual --as-cran flags
+\end{enumerate}
+
+\subsubsection{Benefits}\label{benefits}
+
+\begin{itemize}
+\tightlist
+\item
+  Automated testing on every code change
+\item
+  Early detection of package issues
+\item
+  CRAN compliance verification
+\item
+  Documentation generation validation
+\end{itemize}
+
+\newpage
+
+\section{Security Implementation}\label{security-implementation}
+
+\subsection{Git Security Measures}\label{git-security-measures}
+
+\subsubsection{.gitignore Configuration}\label{gitignore-configuration}
+
+The repository includes comprehensive .gitignore rules protecting:
+
+\paragraph{R-Specific Files}\label{r-specific-files}
+
+\begin{itemize}
+\tightlist
+\item
+  History files: \texttt{.Rhistory}, \texttt{.Rapp.history}
+\item
+  Session data: \texttt{.RData}, \texttt{.RDataTmp}
+\item
+  User data: \texttt{.Ruserdata}
+\end{itemize}
+
+\paragraph{Development Files}\label{development-files}
+
+\begin{itemize}
+\tightlist
+\item
+  RStudio files: \texttt{.Rproj.user/}, \texttt{*.Rproj}
+\item
+  Build artifacts: \texttt{*.tar.gz}, \texttt{/*.Rcheck/}
+\item
+  Example files: \texttt{*-Ex.R}
+\end{itemize}
+
+\paragraph{Generated Content}\label{generated-content}
+
+\begin{itemize}
+\tightlist
+\item
+  Vignette outputs: \texttt{vignettes/*.html}, \texttt{vignettes/*.pdf}
+\item
+  Documentation: \texttt{docs/}
+\item
+  Package outputs: \texttt{*.pdf}, \texttt{*.png},
+  \texttt{composite\_score\_results.csv}
+\end{itemize}
+
+\paragraph{System Files}\label{system-files}
+
+\begin{itemize}
+\tightlist
+\item
+  macOS: \texttt{.DS\_Store}
+\item
+  Windows: \texttt{Thumbs.db}
+\item
+  IDE: \texttt{.vscode/}, \texttt{.idea/}
+\end{itemize}
+
+\subsubsection{Authentication Security}\label{authentication-security}
+
+\paragraph{SSH Key Implementation}\label{ssh-key-implementation}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Algorithm}: Ed25519 (modern, secure)
+\item
+  \textbf{Key Length}: 256-bit
+\item
+  \textbf{Passphrase}: Protected with user-defined passphrase
+\item
+  \textbf{Scope}: Repository-specific access
+\end{itemize}
+
+\paragraph{Token Security}\label{token-security}
+
+\begin{itemize}
+\tightlist
+\item
+  Personal Access Tokens removed from repository history
+\item
+  No embedded credentials in code or configuration
+\item
+  Secure authentication flow implemented
+\end{itemize}
+
+\subsection{Data Security
+Considerations}\label{data-security-considerations}
+
+\subsubsection{Input Data Protection}\label{input-data-protection}
+
+\begin{itemize}
+\tightlist
+\item
+  No sample data included in public repository
+\item
+  User responsible for data privacy compliance
+\item
+  Recommendation for data anonymization
+\end{itemize}
+
+\subsubsection{Output Security}\label{output-security}
+
+\begin{itemize}
+\tightlist
+\item
+  Generated files excluded from version control
+\item
+  Local file system protection responsibility
+\item
+  No automatic cloud uploads
+\end{itemize}
+
+\newpage
+
+\section{Package Functionality}\label{package-functionality}
+
+\subsection{Core Algorithm
+Implementation}\label{core-algorithm-implementation}
+
+\subsubsection{Data Processing Pipeline}\label{data-processing-pipeline}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{File Format Detection}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{grepl}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{.(csv)$"}\NormalTok{, input\_file, }\AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{)) \{}
+\NormalTok{  df }\OtherTok{\textless{}{-}}\NormalTok{ readr}\SpecialCharTok{::}\FunctionTok{read\_csv}\NormalTok{(input\_file)}
+\NormalTok{\} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{grepl}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{.(txt)$"}\NormalTok{, input\_file, }\AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{)) \{}
+\NormalTok{  df }\OtherTok{\textless{}{-}}\NormalTok{ readr}\SpecialCharTok{::}\FunctionTok{read\_delim}\NormalTok{(input\_file, }\AttributeTok{delim =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{grepl}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{.(xlsx)$"}\NormalTok{, input\_file, }\AttributeTok{ignore.case =} \ConstantTok{TRUE}\NormalTok{)) \{}
+\NormalTok{  df }\OtherTok{\textless{}{-}}\NormalTok{ readxl}\SpecialCharTok{::}\FunctionTok{read\_excel}\NormalTok{(input\_file)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\item
+  \textbf{Score Normalization Function}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{normalize }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{all}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(x)) }\SpecialCharTok{||} \FunctionTok{max}\NormalTok{(x, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) }\FunctionTok{return}\NormalTok{(x)}
+\NormalTok{  x }\SpecialCharTok{/} \FunctionTok{max}\NormalTok{(x, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\item
+  \textbf{Composite Score Calculation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_norm }\OtherTok{\textless{}{-}}\NormalTok{ df\_selected }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Variant, normalize)) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{rowwise}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{CompositeScore =} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c\_across}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Variant), }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+\end{enumerate}
+
+\subsubsection{Visualization
+Implementation}\label{visualization-implementation}
+
+\paragraph{Plot Specifications}\label{plot-specifications}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Chart Type}: Horizontal bar chart
+\item
+  \textbf{Color Scheme}: Professional blue (\#0072B2)
+\item
+  \textbf{Theme}: Minimal with custom formatting
+\item
+  \textbf{Sorting}: Descending by composite score
+\item
+  \textbf{Labels}: Clear axis titles and plot title
+\end{itemize}
+
+\paragraph{Export Specifications}\label{export-specifications}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{PDF Output}: 10×6 inches, vector graphics
+\item
+  \textbf{PNG Output}: 10×6 inches, 300 DPI
+\item
+  \textbf{Format}: High-resolution for publication
+\end{itemize}
+
+\subsubsection{Error Handling}\label{error-handling}
+
+\paragraph{Input Validation}\label{input-validation}
+
+\begin{itemize}
+\tightlist
+\item
+  File existence checking
+\item
+  Format support verification
+\item
+  Required column validation
+\item
+  Data type verification
+\end{itemize}
+
+\paragraph{Data Quality Checks}\label{data-quality-checks}
+
+\begin{itemize}
+\tightlist
+\item
+  Missing value handling
+\item
+  Zero-division protection
+\item
+  Normalization boundary conditions
+\item
+  Empty dataset handling
+\end{itemize}
+
+\newpage
+
+\section{Installation and Usage}\label{installation-and-usage}
+
+\subsection{Installation Process}\label{installation-process}
+
+\subsubsection{Prerequisites}\label{prerequisites}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Ensure R version compatibility}
+\NormalTok{R.version}\SpecialCharTok{$}\NormalTok{major }\SpecialCharTok{\textgreater{}=} \DecValTok{4}
+
+\CommentTok{\# Install devtools if not available}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"devtools"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{)) \{}
+  \FunctionTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Package Installation}\label{package-installation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Install PathogenicityRanking from GitHub}
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"MohammadDeen/PathogenicityRanking"}\NormalTok{)}
+
+\CommentTok{\# Load the package}
+\FunctionTok{library}\NormalTok{(PathogenicityRanking)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Dependency Management}\label{dependency-management}
+
+All required dependencies are automatically installed during package
+installation.
+
+\subsection{Usage Examples}\label{usage-examples}
+
+\subsubsection{Basic Usage}\label{basic-usage}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load the package}
+\FunctionTok{library}\NormalTok{(PathogenicityRanking)}
+
+\CommentTok{\# Run analysis with Excel input}
+\NormalTok{results }\OtherTok{\textless{}{-}} \FunctionTok{run\_pathogenicity\_analysis}\NormalTok{(}
+  \AttributeTok{input\_file =} \StringTok{"variants.xlsx"}\NormalTok{,}
+  \AttributeTok{pdf\_output =} \StringTok{"pathogenicity\_ranking.pdf"}\NormalTok{,}
+  \AttributeTok{png\_output =} \StringTok{"pathogenicity\_ranking.png"}\NormalTok{,}
+  \AttributeTok{show\_plot =} \ConstantTok{TRUE}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Advanced Usage}\label{advanced-usage}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# CSV input with custom output names}
+\NormalTok{results }\OtherTok{\textless{}{-}} \FunctionTok{run\_pathogenicity\_analysis}\NormalTok{(}
+  \AttributeTok{input\_file =} \StringTok{"my\_variants.csv"}\NormalTok{,}
+  \AttributeTok{pdf\_output =} \StringTok{"custom\_ranking\_plot.pdf"}\NormalTok{,}
+  \AttributeTok{png\_output =} \StringTok{"custom\_ranking\_plot.png"}\NormalTok{,}
+  \AttributeTok{show\_plot =} \ConstantTok{FALSE}  \CommentTok{\# Don\textquotesingle{}t display in RStudio}
+\NormalTok{)}
+
+\CommentTok{\# Access results}
+\FunctionTok{head}\NormalTok{(results)}
+\FunctionTok{summary}\NormalTok{(results}\SpecialCharTok{$}\NormalTok{CompositeScore)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Result Interpretation}\label{result-interpretation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# View top{-}ranked variants}
+\NormalTok{top\_variants }\OtherTok{\textless{}{-}} \FunctionTok{head}\NormalTok{(results, }\DecValTok{10}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(top\_variants[, }\FunctionTok{c}\NormalTok{(}\StringTok{"Variant"}\NormalTok{, }\StringTok{"CompositeScore"}\NormalTok{)])}
+
+\CommentTok{\# Export specific results}
+\NormalTok{high\_risk }\OtherTok{\textless{}{-}}\NormalTok{ results[results}\SpecialCharTok{$}\NormalTok{CompositeScore }\SpecialCharTok{\textgreater{}} \FloatTok{0.8}\NormalTok{, ]}
+\FunctionTok{write.csv}\NormalTok{(high\_risk, }\StringTok{"high\_risk\_variants.csv"}\NormalTok{, }\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\section{Future Development}\label{future-development}
+
+\subsection{Recommended Enhancements}\label{recommended-enhancements}
+
+\subsubsection{1. Sample Data
+Integration}\label{sample-data-integration}
+
+\begin{itemize}
+\tightlist
+\item
+  Add example datasets in \texttt{data/} directory
+\item
+  Include various file formats for testing
+\item
+  Provide realistic pathogenicity score ranges
+\item
+  Create reproducible examples
+\end{itemize}
+
+\subsubsection{2. Unit Testing
+Implementation}\label{unit-testing-implementation}
+
+\begin{itemize}
+\tightlist
+\item
+  Develop comprehensive test suite in \texttt{tests/testthat/}
+\item
+  Test edge cases and error conditions
+\item
+  Validate mathematical operations
+\item
+  Ensure cross-platform compatibility
+\end{itemize}
+
+\subsubsection{3. Documentation
+Expansion}\label{documentation-expansion}
+
+\begin{itemize}
+\tightlist
+\item
+  Enhance vignettes with real-world case studies
+\item
+  Add mathematical documentation for scoring algorithms
+\item
+  Create video tutorials and screencasts
+\item
+  Develop API documentation with roxygen2
+\end{itemize}
+
+\subsubsection{4. Algorithm Improvements}\label{algorithm-improvements}
+
+\begin{itemize}
+\tightlist
+\item
+  Implement weighted composite scoring
+\item
+  Add additional pathogenicity predictors
+\item
+  Develop machine learning enhancements
+\item
+  Create customizable scoring schemes
+\end{itemize}
+
+\subsubsection{5. Visualization
+Enhancements}\label{visualization-enhancements}
+
+\begin{itemize}
+\tightlist
+\item
+  Interactive plots with plotly
+\item
+  Multiple visualization options
+\item
+  Customizable color schemes and themes
+\item
+  Export format flexibility
+\end{itemize}
+
+\subsubsection{6. Performance
+Optimization}\label{performance-optimization}
+
+\begin{itemize}
+\tightlist
+\item
+  Large dataset handling improvements
+\item
+  Memory usage optimization
+\item
+  Parallel processing implementation
+\item
+  Caching mechanisms
+\end{itemize}
+
+\subsection{CRAN Submission
+Preparation}\label{cran-submission-preparation}
+
+\subsubsection{Required Components}\label{required-components}
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  Comprehensive unit tests (\textgreater80\% coverage)
+\item[$\square$]
+  CRAN policy compliance check
+\item[$\square$]
+  Cross-platform testing (Windows, macOS, Linux)
+\item[$\square$]
+  Documentation completeness verification
+\item[$\square$]
+  Example data inclusion
+\item[$\square$]
+  Performance benchmarking
+\end{itemize}
+
+\subsubsection{Submission Checklist}\label{submission-checklist}
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  R CMD check passes with no errors, warnings, or notes
+\item[$\square$]
+  NEWS.md file with version history
+\item[$\square$]
+  CRAN comments document
+\item[$\square$]
+  Maintainer email verification
+\item[$\square$]
+  License compatibility confirmation
+\end{itemize}
+
+\newpage
+
+\section{Troubleshooting}\label{troubleshooting}
+
+\subsection{Common Issues and
+Solutions}\label{common-issues-and-solutions}
+
+\subsubsection{Installation Problems}\label{installation-problems}
+
+\textbf{Issue}: Package dependencies fail to install\\
+\textbf{Solution}: Update R version and install dependencies manually:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"dplyr"}\NormalTok{, }\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"readr"}\NormalTok{, }\StringTok{"readxl"}\NormalTok{, }\StringTok{"fs"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Issue}: GitHub installation fails\\
+\textbf{Solution}: Check internet connection and GitHub access:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Test GitHub connectivity}
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{session\_info}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Data Input Problems}\label{data-input-problems}
+
+\textbf{Issue}: ``Required column not found'' error\\
+\textbf{Solution}: Verify column names match exactly:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check your column names}
+\FunctionTok{colnames}\NormalTok{(your\_data)}
+\CommentTok{\# Required: AAChange.refGeneWithVer, AlphaMissense\_score, etc.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Issue}: File format not supported\\
+\textbf{Solution}: Convert to supported format or check file extension
+
+\subsubsection{Output Generation Issues}\label{output-generation-issues}
+
+\textbf{Issue}: Plots not generated\\
+\textbf{Solution}: Check file permissions and directory existence:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Verify write permissions}
+\FunctionTok{file.access}\NormalTok{(}\StringTok{"."}\NormalTok{, }\DecValTok{2}\NormalTok{) }\SpecialCharTok{==} \DecValTok{0}  \CommentTok{\# Should return TRUE}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Performance
+Considerations}\label{performance-considerations}
+
+\subsubsection{Large Dataset Handling}\label{large-dataset-handling}
+
+\begin{itemize}
+\tightlist
+\item
+  For datasets \textgreater10,000 variants, consider chunked processing
+\item
+  Monitor memory usage with \texttt{pryr::mem\_used()}
+\item
+  Use data.table for extremely large files
+\end{itemize}
+
+\subsubsection{Computational
+Requirements}\label{computational-requirements}
+
+\begin{itemize}
+\tightlist
+\item
+  Minimum 4GB RAM for typical datasets
+\item
+  SSD storage recommended for large file I/O
+\item
+  Multi-core systems benefit from parallel processing
+\end{itemize}
+
+\newpage
+
+\section{Contact and Support}\label{contact-and-support}
+
+\subsection{Author Information}\label{author-information}
+
+\textbf{Mohammad Deen Hayatu}\\
+Email:
+\href{mailto:mohammaddeenhayatu@gmail.com}{\nolinkurl{mohammaddeenhayatu@gmail.com}}\\
+GitHub: \href{https://github.com/MohammadDeen}{@MohammadDeen}
+
+\subsection{Repository Information}\label{repository-information}
+
+\textbf{GitHub Repository}:
+\url{https://github.com/MohammadDeen/PathogenicityRanking}\\
+\textbf{Issues and Bug Reports}:
+\url{https://github.com/MohammadDeen/PathogenicityRanking/issues}\\
+\textbf{Feature Requests}:
+\url{https://github.com/MohammadDeen/PathogenicityRanking/discussions}
+
+\subsection{Contributing}\label{contributing}
+
+\subsubsection{Bug Reports}\label{bug-reports}
+
+Please include: - R version and operating system - Package version -
+Minimal reproducible example - Error messages and stack traces
+
+\subsubsection{Feature Requests}\label{feature-requests}
+
+Please provide: - Clear description of proposed feature - Use case
+justification - Implementation suggestions - Compatibility
+considerations
+
+\subsubsection{Code Contributions}\label{code-contributions}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Fork the repository
+\item
+  Create feature branch
+\item
+  Implement changes with tests
+\item
+  Submit pull request with description
+\end{enumerate}
+
+\subsection{Citation}\label{citation}
+
+If you use this package in your research, please cite:
+
+\begin{verbatim}
+Hayatu, M.D. (2025). PathogenicityRanking: R package for composite 
+pathogenicity scoring of missense variants. GitHub repository: 
+https://github.com/MohammadDeen/PathogenicityRanking
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Document Version}: 1.0\\
+\textbf{Last Updated}: June 26, 2025\\
+\textbf{Document Status}: Complete Setup Documentation
+
+This documentation represents the comprehensive setup, implementation,
+and usage guide for the PathogenicityRanking R package repository.
+
+\end{document}

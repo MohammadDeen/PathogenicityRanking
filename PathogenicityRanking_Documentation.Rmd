@@ -1,0 +1,678 @@
+---
+title: "PathogenicityRanking R Package Documentation"
+author: "Mohammad Deen Hayatu"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: '3'
+    df_print: paged
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    latex_engine: pdflatex
+    keep_tex: false
+    fig_caption: true
+    highlight: tango
+subtitle: Complete Setup and Implementation Guide
+geometry: margin=1in
+fontsize: 11pt
+documentclass: article
+header-includes:
+- \usepackage{float}
+- \usepackage{fancyhdr}
+- \pagestyle{fancy}
+- \fancyhead[L]{PathogenicityRanking Documentation}
+- \fancyhead[R]{\thepage}
+- "\\fancyfoot[C]{Mohammad Deen Hayatu - June 2025}"
+---
+
+\newpage
+
+# Project Overview
+
+## Package Information
+
+**Package Name**: PathogenicityRanking  
+**Purpose**: R package for computing composite pathogenicity scores to rank missense variants  
+**Author**: Mohammad Deen Hayatu  
+**GitHub Repository**: https://github.com/MohammadDeen/PathogenicityRanking  
+**License**: MIT  
+**Version**: 0.1.0  
+**Date Created**: June 26, 2025  
+
+## Abstract
+
+The PathogenicityRanking package provides a comprehensive solution for evaluating and ranking missense variants based on composite pathogenicity scores derived from multiple predictors including AlphaMissense, CADD, GERP++, phyloP, MPC, REVEL, and MetaSVM scores. This package streamlines the variant analysis workflow by automating data processing, score normalization, composite scoring, and visualization generation.
+
+\newpage
+
+# Repository Structure
+
+The PathogenicityRanking repository follows standard R package conventions with additional GitHub integration features:
+
+```
+PathogenicityRanking/
+├── .github/
+│   └── workflows/
+│       └── R-CMD-check.yaml          # GitHub Actions CI/CD workflow
+├── R/
+│   └── run_pathogenicity_analysis.R  # Main function implementation
+├── vignettes/
+│   └── PathogenicityRankingTutorial.Rmd  # Package tutorial
+├── docs/                             # pkgdown documentation site
+├── .gitignore                        # Git ignore rules for R packages
+├── DESCRIPTION                       # Package metadata and dependencies
+├── LICENSE                           # MIT license file
+├── NAMESPACE                         # Package exports
+├── README.md                         # Main documentation and usage
+├── index.md                          # Package index
+└── pkgdown.yml                       # pkgdown configuration
+```
+
+## Key Files Description
+
+### DESCRIPTION File
+Contains package metadata, dependencies, and licensing information following R package standards.
+
+### NAMESPACE File
+Exports the main function `run_pathogenicity_analysis()` for public use.
+
+### README.md
+Comprehensive documentation including installation instructions, usage examples, and GitHub badges for CI status and licensing.
+
+\newpage
+
+# Package Components
+
+## Main Function: run_pathogenicity_analysis()
+
+### Function Signature
+```r
+run_pathogenicity_analysis(input_file, pdf_output, png_output, show_plot = TRUE)
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `input_file` | character | Path to input variant file (.csv, .txt, .xlsx) |
+| `pdf_output` | character | Output filename for PDF plot |
+| `png_output` | character | Output filename for PNG plot |
+| `show_plot` | logical | Whether to display plot in RStudio (default: TRUE) |
+
+### Required Input Columns
+
+The input file must contain the following columns with exact naming:
+
+1. `AAChange.refGeneWithVer` - Amino acid change annotation
+2. `AlphaMissense_score` - AlphaMissense pathogenicity score
+3. `CADD_phred` - CADD Phred-scaled score
+4. `GERP++_RS` - GERP++ rejection substitution score
+5. `phyloP17way_primate` - PhyloP conservation score
+6. `MPC_score` - Missense badness, PolyPhen-2, and Constraint score
+7. `REVEL_score` - Rare Exome Variant Ensemble Learner score
+8. `MetaSVM_score` - MetaSVM pathogenicity prediction score
+
+### Function Workflow
+
+1. **File Validation**: Checks file existence and format support
+2. **Data Loading**: Reads CSV, TXT, or XLSX files using appropriate libraries
+3. **Column Selection**: Extracts required columns and renames for processing
+4. **Data Filtering**: Removes variants with missing AlphaMissense or CADD scores
+5. **Score Normalization**: Normalizes each score to 0-1 range using max normalization
+6. **Composite Scoring**: Calculates mean of normalized scores per variant
+7. **Ranking**: Sorts variants by composite score in descending order
+8. **Visualization**: Creates horizontal bar chart with professional styling
+9. **Export**: Saves results as CSV and plots in PDF/PNG formats
+
+### Return Value
+
+Returns a data frame containing:
+- Original variant identifiers
+- Normalized individual scores
+- Composite pathogenicity scores
+- Variants sorted by composite score (highest to lowest)
+
+\newpage
+
+# Dependencies
+
+## Required R Packages
+
+The PathogenicityRanking package depends on the following R packages:
+
+### Core Dependencies
+- **dplyr** (>= 1.0.0): Data manipulation and transformation
+- **ggplot2** (>= 3.0.0): Data visualization and plotting
+- **readr** (>= 2.0.0): Fast and friendly CSV file reading
+- **readxl** (>= 1.3.0): Excel file reading capabilities
+- **fs** (>= 1.5.0): Cross-platform file system operations
+
+### Dependency Installation
+These dependencies are automatically installed when the package is installed via `devtools::install_github()`.
+
+## System Requirements
+- R version >= 4.0.0
+- Operating System: Windows, macOS, or Linux
+- Memory: Minimum 4GB RAM recommended for large datasets
+
+\newpage
+
+# Git and GitHub Setup
+
+## Git Repository Initialization
+
+The local Git repository was initialized with standard R package structure:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit: PathogenicityRanking R package"
+```
+
+## GitHub Repository Configuration
+
+### Repository Details
+- **Account**: MohammadDeen
+- **Repository Name**: PathogenicityRanking
+- **Visibility**: Public
+- **URL**: https://github.com/MohammadDeen/PathogenicityRanking
+- **Description**: "R package for composite pathogenicity scoring of missense variants"
+
+### Branch Structure
+- **Main Branch**: `main`
+- **Default Branch**: `main`
+- **Protection Rules**: None (open for contributions)
+
+## Authentication Setup
+
+### SSH Key Configuration
+
+A dedicated SSH key was generated for secure authentication:
+
+```bash
+# Key generation
+ssh-keygen -t ed25519 -C "mohammaddeenhayatu@gmail.com"
+# Key name: pathorankinssh
+
+# SSH agent configuration
+eval "$(ssh-agent -s)"
+ssh-add pathorankinssh
+```
+
+**Public Key** (added to GitHub account):
+```
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFi03GKv01TM0c4q391YoDdOgFffeYlIKP2eZj/KUKFz mohammaddeenhayatu@gmail.com
+```
+
+### Remote URL Configuration
+
+```bash
+# SSH-based remote URL
+git remote set-url origin git@github.com:MohammadDeen/PathogenicityRanking.git
+```
+
+### Authentication Verification
+
+```bash
+ssh -T git@github.com
+# Successful result: "Hi MohammadDeen! You've successfully authenticated"
+```
+
+\newpage
+
+# Documentation
+
+## README.md Features
+
+The README.md file provides comprehensive package documentation including:
+
+### Content Sections
+1. **Package Title and Badges**
+   - GitHub Actions CI/CD status badge
+   - MIT License badge
+   - Professional formatting
+
+2. **Installation Instructions**
+   - devtools installation via GitHub
+   - Dependency management
+   - Quick start example
+
+3. **Function Documentation**
+   - Parameter descriptions
+   - Required input format
+   - Output specifications
+
+4. **Usage Examples**
+   - Basic function call
+   - Parameter configuration
+   - Expected outputs
+
+### GitHub Badges
+
+```markdown
+[![R-CMD-check](https://github.com/MohammadDeen/PathogenicityRanking/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MohammadDeen/PathogenicityRanking/actions/workflows/R-CMD-check.yaml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+```
+
+## Vignette Documentation
+
+### File Location
+`vignettes/PathogenicityRankingTutorial.Rmd`
+
+### Content Structure
+- Package overview and purpose
+- Installation and loading instructions
+- Detailed usage examples
+- Best practices and recommendations
+
+### Output Format
+- HTML vignette for web viewing
+- Integration with R package documentation system
+
+## License Documentation
+
+### License Type
+MIT License - permissive open-source license
+
+### License Terms
+- Commercial use permitted
+- Modification permitted
+- Distribution permitted
+- Private use permitted
+- Liability limitations
+- Warranty disclaimers
+
+\newpage
+
+# Continuous Integration
+
+## GitHub Actions Workflow
+
+### Configuration File
+`.github/workflows/R-CMD-check.yaml`
+
+### Workflow Triggers
+- Push events to main branch
+- Pull request events to main branch
+- Manual workflow dispatch
+
+### Build Matrix
+- **Platform**: Ubuntu Latest
+- **R Version**: Release
+- **Package Check**: R CMD check with CRAN standards
+
+### Workflow Steps
+1. **Checkout Code**: Uses actions/checkout@v3
+2. **Setup R Environment**: Uses r-lib/actions/setup-r@v2
+3. **Install System Dependencies**: Ubuntu package installation
+4. **Install R Dependencies**: Automatic dependency resolution
+5. **Package Build**: R CMD build execution
+6. **Package Check**: R CMD check with --no-manual --as-cran flags
+
+### Benefits
+- Automated testing on every code change
+- Early detection of package issues
+- CRAN compliance verification
+- Documentation generation validation
+
+\newpage
+
+# Security Implementation
+
+## Git Security Measures
+
+### .gitignore Configuration
+
+The repository includes comprehensive .gitignore rules protecting:
+
+#### R-Specific Files
+- History files: `.Rhistory`, `.Rapp.history`
+- Session data: `.RData`, `.RDataTmp`
+- User data: `.Ruserdata`
+
+#### Development Files
+- RStudio files: `.Rproj.user/`, `*.Rproj`
+- Build artifacts: `*.tar.gz`, `/*.Rcheck/`
+- Example files: `*-Ex.R`
+
+#### Generated Content
+- Vignette outputs: `vignettes/*.html`, `vignettes/*.pdf`
+- Documentation: `docs/`
+- Package outputs: `*.pdf`, `*.png`, `composite_score_results.csv`
+
+#### System Files
+- macOS: `.DS_Store`
+- Windows: `Thumbs.db`
+- IDE: `.vscode/`, `.idea/`
+
+### Authentication Security
+
+#### SSH Key Implementation
+- **Algorithm**: Ed25519 (modern, secure)
+- **Key Length**: 256-bit
+- **Passphrase**: Protected with user-defined passphrase
+- **Scope**: Repository-specific access
+
+#### Token Security
+- Personal Access Tokens removed from repository history
+- No embedded credentials in code or configuration
+- Secure authentication flow implemented
+
+## Data Security Considerations
+
+### Input Data Protection
+- No sample data included in public repository
+- User responsible for data privacy compliance
+- Recommendation for data anonymization
+
+### Output Security
+- Generated files excluded from version control
+- Local file system protection responsibility
+- No automatic cloud uploads
+
+\newpage
+
+# Package Functionality
+
+## Core Algorithm Implementation
+
+### Data Processing Pipeline
+
+1. **File Format Detection**
+   ```r
+   if (grepl("\\.(csv)$", input_file, ignore.case = TRUE)) {
+     df <- readr::read_csv(input_file)
+   } else if (grepl("\\.(txt)$", input_file, ignore.case = TRUE)) {
+     df <- readr::read_delim(input_file, delim = "\t")
+   } else if (grepl("\\.(xlsx)$", input_file, ignore.case = TRUE)) {
+     df <- readxl::read_excel(input_file)
+   }
+   ```
+
+2. **Score Normalization Function**
+   ```r
+   normalize <- function(x) {
+     if (all(is.na(x)) || max(x, na.rm = TRUE) == 0) return(x)
+     x / max(x, na.rm = TRUE)
+   }
+   ```
+
+3. **Composite Score Calculation**
+   ```r
+   df_norm <- df_selected %>%
+     dplyr::mutate(across(-Variant, normalize)) %>%
+     dplyr::rowwise() %>%
+     dplyr::mutate(CompositeScore = mean(c_across(-Variant), na.rm = TRUE))
+   ```
+
+### Visualization Implementation
+
+#### Plot Specifications
+- **Chart Type**: Horizontal bar chart
+- **Color Scheme**: Professional blue (#0072B2)
+- **Theme**: Minimal with custom formatting
+- **Sorting**: Descending by composite score
+- **Labels**: Clear axis titles and plot title
+
+#### Export Specifications
+- **PDF Output**: 10×6 inches, vector graphics
+- **PNG Output**: 10×6 inches, 300 DPI
+- **Format**: High-resolution for publication
+
+### Error Handling
+
+#### Input Validation
+- File existence checking
+- Format support verification
+- Required column validation
+- Data type verification
+
+#### Data Quality Checks
+- Missing value handling
+- Zero-division protection
+- Normalization boundary conditions
+- Empty dataset handling
+
+\newpage
+
+# Installation and Usage
+
+## Installation Process
+
+### Prerequisites
+```r
+# Ensure R version compatibility
+R.version$major >= 4
+
+# Install devtools if not available
+if (!requireNamespace("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+```
+
+### Package Installation
+```r
+# Install PathogenicityRanking from GitHub
+devtools::install_github("MohammadDeen/PathogenicityRanking")
+
+# Load the package
+library(PathogenicityRanking)
+```
+
+### Dependency Management
+All required dependencies are automatically installed during package installation.
+
+## Usage Examples
+
+### Basic Usage
+```r
+# Load the package
+library(PathogenicityRanking)
+
+# Run analysis with Excel input
+results <- run_pathogenicity_analysis(
+  input_file = "variants.xlsx",
+  pdf_output = "pathogenicity_ranking.pdf",
+  png_output = "pathogenicity_ranking.png",
+  show_plot = TRUE
+)
+```
+
+### Advanced Usage
+```r
+# CSV input with custom output names
+results <- run_pathogenicity_analysis(
+  input_file = "my_variants.csv",
+  pdf_output = "custom_ranking_plot.pdf",
+  png_output = "custom_ranking_plot.png",
+  show_plot = FALSE  # Don't display in RStudio
+)
+
+# Access results
+head(results)
+summary(results$CompositeScore)
+```
+
+### Result Interpretation
+```r
+# View top-ranked variants
+top_variants <- head(results, 10)
+print(top_variants[, c("Variant", "CompositeScore")])
+
+# Export specific results
+high_risk <- results[results$CompositeScore > 0.8, ]
+write.csv(high_risk, "high_risk_variants.csv", row.names = FALSE)
+```
+
+\newpage
+
+# Future Development
+
+## Recommended Enhancements
+
+### 1. Sample Data Integration
+- Add example datasets in `data/` directory
+- Include various file formats for testing
+- Provide realistic pathogenicity score ranges
+- Create reproducible examples
+
+### 2. Unit Testing Implementation
+- Develop comprehensive test suite in `tests/testthat/`
+- Test edge cases and error conditions
+- Validate mathematical operations
+- Ensure cross-platform compatibility
+
+### 3. Documentation Expansion
+- Enhance vignettes with real-world case studies
+- Add mathematical documentation for scoring algorithms
+- Create video tutorials and screencasts
+- Develop API documentation with roxygen2
+
+### 4. Algorithm Improvements
+- Implement weighted composite scoring
+- Add additional pathogenicity predictors
+- Develop machine learning enhancements
+- Create customizable scoring schemes
+
+### 5. Visualization Enhancements
+- Interactive plots with plotly
+- Multiple visualization options
+- Customizable color schemes and themes
+- Export format flexibility
+
+### 6. Performance Optimization
+- Large dataset handling improvements
+- Memory usage optimization
+- Parallel processing implementation
+- Caching mechanisms
+
+## CRAN Submission Preparation
+
+### Required Components
+- [ ] Comprehensive unit tests (>80% coverage)
+- [ ] CRAN policy compliance check
+- [ ] Cross-platform testing (Windows, macOS, Linux)
+- [ ] Documentation completeness verification
+- [ ] Example data inclusion
+- [ ] Performance benchmarking
+
+### Submission Checklist
+- [ ] R CMD check passes with no errors, warnings, or notes
+- [ ] NEWS.md file with version history
+- [ ] CRAN comments document
+- [ ] Maintainer email verification
+- [ ] License compatibility confirmation
+
+\newpage
+
+# Troubleshooting
+
+## Common Issues and Solutions
+
+### Installation Problems
+
+**Issue**: Package dependencies fail to install  
+**Solution**: Update R version and install dependencies manually:
+```r
+install.packages(c("dplyr", "ggplot2", "readr", "readxl", "fs"))
+```
+
+**Issue**: GitHub installation fails  
+**Solution**: Check internet connection and GitHub access:
+```r
+# Test GitHub connectivity
+devtools::session_info()
+```
+
+### Data Input Problems
+
+**Issue**: "Required column not found" error  
+**Solution**: Verify column names match exactly:
+```r
+# Check your column names
+colnames(your_data)
+# Required: AAChange.refGeneWithVer, AlphaMissense_score, etc.
+```
+
+**Issue**: File format not supported  
+**Solution**: Convert to supported format or check file extension
+
+### Output Generation Issues
+
+**Issue**: Plots not generated  
+**Solution**: Check file permissions and directory existence:
+```r
+# Verify write permissions
+file.access(".", 2) == 0  # Should return TRUE
+```
+
+## Performance Considerations
+
+### Large Dataset Handling
+- For datasets >10,000 variants, consider chunked processing
+- Monitor memory usage with `pryr::mem_used()`
+- Use data.table for extremely large files
+
+### Computational Requirements
+- Minimum 4GB RAM for typical datasets
+- SSD storage recommended for large file I/O
+- Multi-core systems benefit from parallel processing
+
+\newpage
+
+# Contact and Support
+
+## Author Information
+
+**Mohammad Deen Hayatu**  
+Email: mohammaddeenhayatu@gmail.com  
+GitHub: [@MohammadDeen](https://github.com/MohammadDeen)  
+
+## Repository Information
+
+**GitHub Repository**: https://github.com/MohammadDeen/PathogenicityRanking  
+**Issues and Bug Reports**: https://github.com/MohammadDeen/PathogenicityRanking/issues  
+**Feature Requests**: https://github.com/MohammadDeen/PathogenicityRanking/discussions  
+
+## Contributing
+
+### Bug Reports
+Please include:
+- R version and operating system
+- Package version
+- Minimal reproducible example
+- Error messages and stack traces
+
+### Feature Requests
+Please provide:
+- Clear description of proposed feature
+- Use case justification
+- Implementation suggestions
+- Compatibility considerations
+
+### Code Contributions
+1. Fork the repository
+2. Create feature branch
+3. Implement changes with tests
+4. Submit pull request with description
+
+## Citation
+
+If you use this package in your research, please cite:
+
+```
+Hayatu, M.D. (2025). PathogenicityRanking: R package for composite 
+pathogenicity scoring of missense variants. GitHub repository: 
+https://github.com/MohammadDeen/PathogenicityRanking
+```
+
+---
+
+**Document Version**: 1.0  
+**Last Updated**: June 26, 2025  
+**Document Status**: Complete Setup Documentation  
+
+This documentation represents the comprehensive setup, implementation, and usage guide for the PathogenicityRanking R package repository.
