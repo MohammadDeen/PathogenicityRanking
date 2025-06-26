@@ -1,0 +1,27 @@
+---
+title: "Using the PathogenicityRanking Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using the PathogenicityRanking Package}
+  %\VignetteEngine{rmarkdown::render}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(PathogenicityRanking)
+```
+
+## Overview
+
+This vignette demonstrates how to use the `run_pathogenicity_analysis()` function to visualize and score pathogenicity of missense variants.
+
+## Example
+
+```{r}
+# Not run: Replace with your file
+# run_pathogenicity_analysis("your_file.xlsx", "output.pdf", "output.png", show_plot = TRUE)
+```
