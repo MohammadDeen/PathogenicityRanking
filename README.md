@@ -25,16 +25,32 @@ devtools::install_github("MohammadDeen/PathogenicityRanking")
 ```r
 library(PathogenicityRanking)
 
-# Run analysis on your variant file
+# Basic analysis
 results <- run_pathogenicity_analysis(
   input_file = "your_variants.xlsx",
   pdf_output = "pathogenicity_ranking.pdf", 
   png_output = "pathogenicity_ranking.png",
   show_plot = TRUE
 )
+
+# Enhanced analysis with multiple visualizations
+enhanced_results <- run_enhanced_analysis(
+  input_file = "your_variants.xlsx",
+  output_prefix = "comprehensive_analysis",
+  create_heatmap = TRUE,
+  create_scatter = TRUE,
+  create_distribution = TRUE
+)
 ```
 
-This project provides a reusable R function to evaluate and rank missense variants based on a composite pathogenicity score derived from multiple predictors.
+## ✨ Features
+
+- **Multiple file formats**: CSV, TXT, XLSX support
+- **Comprehensive scoring**: Integrates 8 pathogenicity predictors
+- **Advanced visualizations**: Bar charts, heatmaps, scatter plots, distributions
+- **Flexible analysis**: Basic and enhanced analysis workflows
+- **Publication-ready**: High-quality PDF and PNG outputs
+- **Real-world examples**: Comprehensive vignette with practical applications
 
 ## 📂 Contents
 
@@ -43,15 +59,36 @@ This project provides a reusable R function to evaluate and rank missense varian
 - `composite_score_results.csv`: Output file generated after running the function (created after first run)
 - `variant_pathogenicity_ranking.pdf/png`: Visualization outputs
 
-## 🧪 Function Overview
+## 🧪 Available Functions
 
-### `run_pathogenicity_analysis(input_file, pdf_output, png_output, show_plot = TRUE)`
+### Core Functions
+
+#### `run_pathogenicity_analysis()`
+Basic pathogenicity analysis with ranking visualization.
 
 | Argument       | Description |
 |----------------|-------------|
 | `input_file`   | Path to a `.csv`, `.txt`, or `.xlsx` file with variant data |
 | `pdf_output`   | Output filename for the PDF plot |
 | `png_output`   | Output filename for the PNG plot |
+| `show_plot`    | Whether to display the plot in RStudio (default: TRUE) |
+
+#### `run_enhanced_analysis()`
+Comprehensive analysis with multiple visualization types.
+
+| Argument       | Description |
+|----------------|-------------|
+| `input_file`   | Path to variant file |
+| `output_prefix` | Prefix for all output files |
+| `create_heatmap` | Generate heatmap visualization |
+| `create_scatter` | Generate scatter plots |
+| `create_distribution` | Generate distribution plot |
+
+### Visualization Functions
+
+- **`create_score_heatmap()`**: Individual score heatmap across predictors
+- **`create_composite_scatter()`**: Composite vs individual score relationships  
+- **`create_score_distribution()`**: Distribution analysis of composite scores
 | `show_plot`    | Whether to display the plot in RStudio (default: TRUE) |
 
 ### Required Columns in Input File
