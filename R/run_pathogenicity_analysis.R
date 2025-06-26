@@ -33,17 +33,21 @@ run_pathogenicity_analysis <- function(input_file, pdf_output, png_output, show_
   }
 
   df_selected <- df %>%
-    dplyr::select(
-      Variant = AAChange.refGeneWithVer,
+    select(
+      Variant       = AAChange.refGeneWithVer,
       AlphaMissense = AlphaMissense_score,
-      CADD = CADD_phred,
-      GERP = `GERP++_RS`,
-      phyloP = phyloP17way_primate,
-      MPC = MPC_score,
-      REVEL = REVEL_score,
-      MetaSVM = MetaSVM_score
+      CADD          = CADD_phred,
+      GERP          = `GERP++_RS`,
+      phyloP        = phyloP17way_primate,
+      MPC           = MPC_score,
+      REVEL         = REVEL_score,
+      MetaSVM       = MetaSVM_score
     ) %>%
-    dplyr::filter(!is.na(AlphaMissense) & !is.na(CADD))
+    # 1) turn every column (even numeric ones) into character
+    # 2) replace "." with NA
+    # 3) coerce back to numeric
+    mutate(across(-Variant, ~ as.numeric(na_if(as.character(.), ".")))) %>%
+    filter(!is.na(AlphaMissense), !is.na(CADD))
 
   normalize <- function(x) {
     if (all(is.na(x)) || max(x, na.rm = TRUE) == 0) return(x)
