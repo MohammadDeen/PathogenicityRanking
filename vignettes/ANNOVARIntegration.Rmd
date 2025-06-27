@@ -93,6 +93,28 @@ if (!setup_ok) {
 }
 ```
 
+## Supported Input Formats
+
+The ANNOVAR integration supports multiple input formats:
+
+- **VCF files** (`.vcf`) - Standard Variant Call Format
+- **Compressed VCF files** (`.vcf.gz`) - Gzip-compressed VCF files
+- **ANNOVAR input format** (`.avinput`) - Pre-converted ANNOVAR format
+- **Tab-delimited files** - Custom variant format
+
+```{r format-examples, eval=FALSE}
+# Regular VCF file
+annotate_with_annovar(input_file = "variants.vcf", ...)
+
+# Compressed VCF file (automatic decompression)
+annotate_with_annovar(input_file = "variants.vcf.gz", ...)
+
+# Pre-converted ANNOVAR format
+annotate_with_annovar(input_file = "variants.avinput", ...)
+```
+
+**Note:** For `.vcf.gz` files, the function automatically handles decompression using `zcat`, so no manual decompression is needed.
+
 ## Complete Workflow Example
 
 ### Method 1: One-Step Analysis (Recommended)
@@ -124,13 +146,23 @@ For more control over the process, run each step separately:
 #### Step 1: Annotate Variants with ANNOVAR
 
 ```{r step1-annotate}
-# Annotate raw variants
+# Annotate raw variants (regular VCF)
 annotated_file <- annotate_with_annovar(
   input_file = "variants.vcf",
   annovar_path = "/usr/local/annovar",
   database_path = "/usr/local/annovar/humandb",
   genome_build = "hg38",
   output_prefix = "study_variants",
+  keep_intermediate = TRUE
+)
+
+# Or use compressed VCF (automatic decompression)
+annotated_file_gz <- annotate_with_annovar(
+  input_file = "variants.vcf.gz",
+  annovar_path = "/usr/local/annovar",
+  database_path = "/usr/local/annovar/humandb",
+  genome_build = "hg38",
+  output_prefix = "study_variants_gz",
   keep_intermediate = TRUE
 )
 

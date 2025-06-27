@@ -56,13 +56,16 @@ results <- annovar_to_pathogenicity_analysis(
   output_prefix = "my_analysis",
   enhanced_analysis = TRUE
 )
+
+# Also supports compressed VCF files:
+# input_file = "variants.vcf.gz"  # Automatic decompression
 ```
 
 ## ✨ Features
 
 - **Complete workflow**: From raw VCF files to pathogenicity analysis
 - **ANNOVAR integration**: Automated variant annotation and missense filtering
-- **Multiple file formats**: CSV, TXT, XLSX, VCF support
+- **Multiple file formats**: CSV, TXT, XLSX, VCF, VCF.gz support
 - **Comprehensive scoring**: Integrates 8 pathogenicity predictors
 - **Advanced visualizations**: Bar charts, heatmaps, scatter plots, distributions
 - **Flexible analysis**: Basic and enhanced analysis workflows

@@ -2,8 +2,9 @@
 #'
 #' This function takes raw variant calls, annotates them using ANNOVAR,
 #' and filters for missense variants suitable for pathogenicity analysis.
+#' Supports both regular VCF (.vcf) and compressed VCF (.vcf.gz) files.
 #'
-#' @param input_file Path to input variant file (VCF, avinput, or tab-delimited)
+#' @param input_file Path to input variant file (VCF, VCF.gz, avinput, or tab-delimited)
 #' @param annovar_path Path to ANNOVAR installation directory
 #' @param database_path Path to ANNOVAR database directory
 #' @param genome_build Genome build (default: "hg38")
@@ -15,8 +16,17 @@
 #'
 #' @examples
 #' \dontrun{
+#' # Regular VCF file
 #' annotated_file <- annotate_with_annovar(
 #'   input_file = "variants.vcf",
+#'   annovar_path = "/path/to/annovar",
+#'   database_path = "/path/to/annovar/humandb",
+#'   output_prefix = "my_variants"
+#' )
+#' 
+#' # Compressed VCF file
+#' annotated_file <- annotate_with_annovar(
+#'   input_file = "variants.vcf.gz",
 #'   annovar_path = "/path/to/annovar",
 #'   database_path = "/path/to/annovar/humandb",
 #'   output_prefix = "my_variants"
@@ -39,15 +49,33 @@ annotate_with_annovar <- function(input_file, annovar_path, database_path,
   # Determine file type and prepare for ANNOVAR
   file_ext <- tools::file_ext(input_file)
   
+  # Handle compressed VCF files
+  is_vcf_gz <- grepl("\\.vcf\\.gz$", input_file, ignore.case = TRUE)
+  is_vcf <- tolower(file_ext) == "vcf" || is_vcf_gz
+  
   # Convert VCF to ANNOVAR input format if needed
-  if (tolower(file_ext) == "vcf") {
+  if (is_vcf) {
     avinput_file <- paste0(output_prefix, ".avinput")
-    convert_cmd <- paste(
-      "perl", file.path(annovar_path, "convert2annovar.pl"),
-      "-format vcf4old",
-      input_file,
-      ">", avinput_file
-    )
+    
+    # Handle compressed VCF files
+    if (is_vcf_gz) {
+      # For .vcf.gz files, use zcat to decompress on-the-fly
+      convert_cmd <- paste(
+        "zcat", shQuote(input_file), "|",
+        "perl", file.path(annovar_path, "convert2annovar.pl"),
+        "-format vcf4old",
+        "-",
+        ">", avinput_file
+      )
+    } else {
+      # For regular .vcf files
+      convert_cmd <- paste(
+        "perl", file.path(annovar_path, "convert2annovar.pl"),
+        "-format vcf4old",
+        input_file,
+        ">", avinput_file
+      )
+    }
     
     cat("Converting VCF to ANNOVAR input format...\n")
     system(convert_cmd)
@@ -96,7 +124,7 @@ annotate_with_annovar <- function(input_file, annovar_path, database_path,
   cat("ANNOVAR annotation completed successfully!\n")
   
   # Clean up intermediate files if requested
-  if (!keep_intermediate && tolower(file_ext) == "vcf") {
+  if (!keep_intermediate && is_vcf) {
     fs::file_delete(avinput_file)
   }
   
