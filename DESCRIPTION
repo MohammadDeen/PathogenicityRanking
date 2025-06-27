@@ -4,7 +4,7 @@ Title: Composite Pathogenicity Scoring for Missense Variants
 Version: 0.1.0
 Author: Mohammad Deen Hayatu
 Maintainer: Mohammad Deen Hayatu <mohammaddeenhayatu@gmail.com>
-Description: Computes and visualizes a composite score to rank missense variants using scores like AlphaMissense, CADD, GERP++, etc.
+Description: Computes and visualizes composite pathogenicity scores to rank missense variants using scores like AlphaMissense, CADD, GERP++, etc. Includes ANNOVAR integration for variant annotation and automated missense variant filtering from raw variant calls.
 License: MIT
 Encoding: UTF-8
 LazyData: true

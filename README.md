@@ -6,7 +6,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
-An R package for computing composite pathogenicity scores to rank missense variants using multiple predictors like AlphaMissense, CADD, GERP++, and others.
+An R package for computing composite pathogenicity scores to rank missense variants using multiple predictors like AlphaMissense, CADD, GERP++, and others. **Now includes comprehensive ANNOVAR integration for complete variant annotation workflows!**
 
 ## Installation
 
@@ -21,6 +21,8 @@ devtools::install_github("MohammadDeen/PathogenicityRanking")
 ```
 
 ## Quick Start
+
+### Option 1: Analyze Pre-annotated Data
 
 ```r
 library(PathogenicityRanking)
@@ -43,14 +45,30 @@ enhanced_results <- run_enhanced_analysis(
 )
 ```
 
+### Option 2: Complete Workflow from Raw VCF (NEW!)
+
+```r
+# Complete workflow: VCF → ANNOVAR annotation → Missense filtering → Pathogenicity analysis
+results <- annovar_to_pathogenicity_analysis(
+  input_file = "variants.vcf",
+  annovar_path = "/usr/local/annovar",
+  database_path = "/usr/local/annovar/humandb",
+  output_prefix = "my_analysis",
+  enhanced_analysis = TRUE
+)
+```
+
 ## ✨ Features
 
-- **Multiple file formats**: CSV, TXT, XLSX support
+- **Complete workflow**: From raw VCF files to pathogenicity analysis
+- **ANNOVAR integration**: Automated variant annotation and missense filtering
+- **Multiple file formats**: CSV, TXT, XLSX, VCF support
 - **Comprehensive scoring**: Integrates 8 pathogenicity predictors
 - **Advanced visualizations**: Bar charts, heatmaps, scatter plots, distributions
 - **Flexible analysis**: Basic and enhanced analysis workflows
 - **Publication-ready**: High-quality PDF and PNG outputs
-- **Real-world examples**: Comprehensive vignette with practical applications
+- **Real-world examples**: Comprehensive vignettes with practical applications
+- **Quality control**: Built-in filtering and validation steps
 
 ## 📂 Contents
 
@@ -89,9 +107,15 @@ Comprehensive analysis with multiple visualization types.
 - **`create_score_heatmap()`**: Individual score heatmap across predictors
 - **`create_composite_scatter()`**: Composite vs individual score relationships  
 - **`create_score_distribution()`**: Distribution analysis of composite scores
-| `show_plot`    | Whether to display the plot in RStudio (default: TRUE) |
 
-### Required Columns in Input File
+### ANNOVAR Integration Functions (NEW!)
+
+- **`annovar_to_pathogenicity_analysis()`**: Complete workflow from VCF to analysis
+- **`annotate_with_annovar()`**: Annotate variants using ANNOVAR
+- **`filter_missense_variants()`**: Filter annotated variants for missense mutations
+- **`check_annovar_setup()`**: Verify ANNOVAR installation and databases
+
+## 📋 Required Columns in Input File
 
 The input file must contain the following columns:
 
@@ -108,6 +132,37 @@ The input file must contain the following columns:
 
 - A composite pathogenicity score is calculated and visualized for each variant.
 - Results are saved to CSV and plots are saved in both PDF and PNG format.
+
+## 📋 ANNOVAR Integration Requirements
+
+To use the ANNOVAR integration features, you need:
+
+### ANNOVAR Installation
+- ANNOVAR software installed on your system
+- Proper file permissions to execute ANNOVAR scripts
+
+### Required Databases
+Download these databases for optimal pathogenicity analysis:
+
+```bash
+# Essential databases
+perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar refGene humandb/
+perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar avsnp150 humandb/
+perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar dbnsfp42c humandb/
+
+# Recommended additional databases  
+perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar alphamissense humandb/
+perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar clinvar_20220320 humandb/
+```
+
+### Setup Verification
+```r
+# Check your ANNOVAR setup
+check_annovar_setup(
+  annovar_path = "/usr/local/annovar",
+  database_path = "/usr/local/annovar/humandb"
+)
+```
 
 ## ✍️ Author
 

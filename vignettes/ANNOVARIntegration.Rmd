@@ -1,0 +1,449 @@
+---
+title: "ANNOVAR Integration: From Raw Variants to Pathogenicity Analysis"
+subtitle: "Complete workflow for variant annotation and missense variant analysis"
+author: "Mohammad Deen Hayatu"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+    fig_width: 8
+    fig_height: 6
+vignette: >
+  %\VignetteIndexEntry{ANNOVAR Integration: From Raw Variants to Pathogenicity Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center",
+  warning = FALSE,
+  message = FALSE,
+  eval = FALSE  # Set to FALSE since ANNOVAR may not be available in all environments
+)
+```
+
+## Introduction
+
+The PathogenicityRanking package now includes comprehensive ANNOVAR integration, allowing users to start with raw variant calls (VCF files) and automatically:
+
+1. **Annotate variants** using ANNOVAR with multiple databases
+2. **Filter for missense variants** suitable for pathogenicity analysis
+3. **Perform comprehensive pathogenicity analysis** with multiple visualizations
+
+This vignette demonstrates the complete workflow from raw variants to publication-ready analysis.
+
+## Prerequisites
+
+### ANNOVAR Installation
+
+Before using the ANNOVAR integration features, you need:
+
+1. **ANNOVAR software** installed on your system
+2. **Required databases** downloaded for your genome build
+3. **Proper file permissions** to execute ANNOVAR scripts
+
+### Required ANNOVAR Databases
+
+For optimal pathogenicity analysis, download these databases:
+
+```bash
+# Essential databases (run these commands in your ANNOVAR directory)
+perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar refGene humandb/
+perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar avsnp150 humandb/
+perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar dbnsfp42c humandb/
+
+# Optional but recommended
+perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar alphamissense humandb/
+perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar clinvar_20220320 humandb/
+```
+
+## Setup and Installation
+
+```{r installation}
+# Install PathogenicityRanking package
+devtools::install_github("MohammadDeen/PathogenicityRanking")
+
+# Load the package
+library(PathogenicityRanking)
+library(dplyr)
+library(ggplot2)
+```
+
+## Verifying ANNOVAR Setup
+
+Before starting analysis, verify your ANNOVAR installation:
+
+```{r check-setup}
+# Check ANNOVAR installation and databases
+annovar_path <- "/usr/local/annovar"  # Adjust to your ANNOVAR installation path
+database_path <- "/usr/local/annovar/humandb"  # Adjust to your database path
+
+setup_ok <- check_annovar_setup(
+  annovar_path = annovar_path,
+  database_path = database_path,
+  genome_build = "hg38"
+)
+
+if (!setup_ok) {
+  stop("ANNOVAR setup is incomplete. Please install missing components.")
+}
+```
+
+## Complete Workflow Example
+
+### Method 1: One-Step Analysis (Recommended)
+
+The simplest approach uses the integrated workflow function:
+
+```{r complete-workflow}
+# Complete workflow from VCF to pathogenicity analysis
+results <- annovar_to_pathogenicity_analysis(
+  input_file = "my_variants.vcf",
+  annovar_path = "/usr/local/annovar",
+  database_path = "/usr/local/annovar/humandb",
+  output_prefix = "my_study",
+  genome_build = "hg38",
+  run_analysis = TRUE,
+  enhanced_analysis = TRUE,  # Generate multiple visualization types
+  min_quality = 20,         # Filter variants with QUAL < 20
+  keep_intermediate = FALSE # Clean up intermediate files
+)
+
+# View results
+str(results)
+```
+
+### Method 2: Step-by-Step Analysis
+
+For more control over the process, run each step separately:
+
+#### Step 1: Annotate Variants with ANNOVAR
+
+```{r step1-annotate}
+# Annotate raw variants
+annotated_file <- annotate_with_annovar(
+  input_file = "variants.vcf",
+  annovar_path = "/usr/local/annovar",
+  database_path = "/usr/local/annovar/humandb",
+  genome_build = "hg38",
+  output_prefix = "study_variants",
+  keep_intermediate = TRUE
+)
+
+cat("Annotated file created:", annotated_file, "\n")
+```
+
+#### Step 2: Filter for Missense Variants
+
+```{r step2-filter}
+# Filter for missense variants only
+missense_file <- filter_missense_variants(
+  annotated_file = annotated_file,
+  output_file = "missense_variants.csv",
+  min_quality = 20
+)
+
+# Examine the filtered data
+missense_data <- read.csv(missense_file)
+cat("Number of missense variants:", nrow(missense_data), "\n")
+head(missense_data[, c("Chr", "Start", "End", "Ref", "Alt", "AAChange.refGeneWithVer")])
+```
+
+#### Step 3: Run Pathogenicity Analysis
+
+```{r step3-analysis}
+# Basic pathogenicity analysis
+basic_results <- run_pathogenicity_analysis(
+  input_file = missense_file,
+  pdf_output = "pathogenicity_ranking.pdf",
+  png_output = "pathogenicity_ranking.png",
+  show_plot = TRUE
+)
+
+# Enhanced analysis with multiple visualizations
+enhanced_results <- run_enhanced_analysis(
+  input_file = missense_file,
+  output_prefix = "comprehensive_analysis",
+  create_heatmap = TRUE,
+  create_scatter = TRUE,
+  create_distribution = TRUE,
+  show_plots = TRUE
+)
+```
+
+## Working with Different Input Formats
+
+### VCF Files
+
+```{r vcf-input}
+# Standard VCF file processing
+vcf_results <- annovar_to_pathogenicity_analysis(
+  input_file = "variants.vcf",
+  annovar_path = "/usr/local/annovar",
+  database_path = "/usr/local/annovar/humandb",
+  output_prefix = "vcf_analysis"
+)
+```
+
+### ANNOVAR Input Format
+
+```{r avinput}
+# If you already have ANNOVAR input format
+avinput_results <- annovar_to_pathogenicity_analysis(
+  input_file = "variants.avinput",
+  annovar_path = "/usr/local/annovar",
+  database_path = "/usr/local/annovar/humandb",
+  output_prefix = "avinput_analysis"
+)
+```
+
+## Quality Control and Filtering Options
+
+### Applying Quality Filters
+
+```{r quality-filters}
+# Apply stringent quality filters
+high_quality_results <- annovar_to_pathogenicity_analysis(
+  input_file = "variants.vcf",
+  annovar_path = "/usr/local/annovar",
+  database_path = "/usr/local/annovar/humandb",
+  output_prefix = "high_quality",
+  min_quality = 30,        # Higher quality threshold
+  keep_intermediate = TRUE # Keep files for inspection
+)
+```
+
+### Custom Filtering
+
+```{r custom-filtering}
+# Read annotated data for custom filtering
+annotated_data <- read.csv("study_variants_annotated.hg38_multianno.csv")
+
+# Apply custom filters
+custom_filtered <- annotated_data %>%
+  filter(
+    Func.refGene == "exonic",
+    grepl("missense", ExonicFunc.refGene, ignore.case = TRUE),
+    # Add custom criteria
+    !grepl("benign", ClinVar_CLNSIG, ignore.case = TRUE),
+    CADD_phred > 15,
+    GERP_RS > 2
+  )
+
+# Save custom filtered results
+write.csv(custom_filtered, "custom_missense_variants.csv", row.names = FALSE)
+```
+
+## Batch Processing Multiple Files
+
+```{r batch-processing}
+# Process multiple VCF files
+vcf_files <- list.files(pattern = "*.vcf$", full.names = TRUE)
+
+batch_results <- map(vcf_files, function(vcf_file) {
+  file_prefix <- tools::file_path_sans_ext(basename(vcf_file))
+  
+  annovar_to_pathogenicity_analysis(
+    input_file = vcf_file,
+    annovar_path = "/usr/local/annovar",
+    database_path = "/usr/local/annovar/humandb",
+    output_prefix = file_prefix,
+    enhanced_analysis = TRUE,
+    keep_intermediate = FALSE
+  )
+})
+
+names(batch_results) <- tools::file_path_sans_ext(basename(vcf_files))
+```
+
+## Interpreting ANNOVAR Annotation Results
+
+### Key Annotation Columns
+
+When ANNOVAR completes annotation, key columns include:
+
+- **Func.refGene**: Functional annotation (exonic, intronic, etc.)
+- **ExonicFunc.refGene**: Exonic function (missense, nonsense, etc.)
+- **AAChange.refGeneWithVer**: Amino acid change with transcript version
+- **CADD_phred**: CADD pathogenicity score
+- **GERP++_RS**: GERP++ conservation score
+- **phyloP17way_primate**: PhyloP conservation score
+- **REVEL_score**: REVEL pathogenicity score
+- **ClinVar_CLNSIG**: ClinVar clinical significance
+
+### Filtering Logic
+
+The package applies these filters for missense variants:
+
+```{r filtering-logic}
+# This is the internal filtering logic
+missense_filter_example <- function(data) {
+  data %>%
+    filter(
+      Func.refGene == "exonic",                    # Must be in exonic region
+      grepl("missense", ExonicFunc.refGene, ignore.case = TRUE), # Must be missense
+      !is.na(AAChange.refGene) | !is.na(AAChange.refGeneWithVer), # Must have AA change
+      !is.na(Chr), !is.na(Start), !is.na(End)     # Must have coordinates
+    )
+}
+```
+
+## Troubleshooting Common Issues
+
+### ANNOVAR Not Found
+
+```{r troubleshoot-annovar}
+# Check if ANNOVAR path is correct
+annovar_path <- "/usr/local/annovar"
+if (!dir.exists(annovar_path)) {
+  cat("ANNOVAR not found at:", annovar_path, "\n")
+  cat("Please check the installation path\n")
+}
+
+# Check for required ANNOVAR scripts
+required_scripts <- c("table_annovar.pl", "convert2annovar.pl")
+for (script in required_scripts) {
+  script_path <- file.path(annovar_path, script)
+  if (!file.exists(script_path)) {
+    cat("Missing script:", script_path, "\n")
+  }
+}
+```
+
+### Missing Databases
+
+```{r troubleshoot-databases}
+# Check for required databases
+database_path <- "/usr/local/annovar/humandb"
+required_dbs <- c("hg38_refGene.txt", "hg38_dbnsfp42c.txt")
+
+for (db in required_dbs) {
+  db_path <- file.path(database_path, db)
+  if (!file.exists(db_path)) {
+    cat("Missing database:", db_path, "\n")
+    db_name <- gsub("hg38_|\\.txt$", "", db)
+    cat("Download with: perl annotate_variation.pl -buildver hg38 -downdb -webfrom annovar", 
+        db_name, "humandb/\n")
+  }
+}
+```
+
+### No Missense Variants Found
+
+```{r troubleshoot-no-missense}
+# If no missense variants are found, check the data
+check_variant_types <- function(annotated_file) {
+  data <- read.csv(annotated_file)
+  
+  cat("Functional categories:\n")
+  print(table(data$Func.refGene))
+  
+  cat("\nExonic functions:\n")
+  exonic_data <- data[data$Func.refGene == "exonic", ]
+  if (nrow(exonic_data) > 0) {
+    print(table(exonic_data$ExonicFunc.refGene))
+  } else {
+    cat("No exonic variants found\n")
+  }
+}
+
+# check_variant_types("your_annotated_file.csv")
+```
+
+## Advanced Features
+
+### Custom Database Protocols
+
+```{r custom-protocols}
+# Use custom ANNOVAR protocol for specific databases
+custom_annotate <- function(input_file, annovar_path, database_path) {
+  # Custom protocol including more databases
+  protocol <- "refGene,avsnp150,dbnsfp42c,clinvar_20220320,alphamissense"
+  operation <- "g,f,f,f,f"
+  
+  # This would be integrated into the annotate_with_annovar function
+  # for custom database combinations
+}
+```
+
+### Parallel Processing
+
+```{r parallel-processing}
+# For large datasets, use parallel processing
+library(parallel)
+library(foreach)
+library(doParallel)
+
+# Setup parallel processing
+cl <- makeCluster(detectCores() - 1)
+registerDoParallel(cl)
+
+# Process multiple files in parallel
+vcf_files <- list.files(pattern = "*.vcf$", full.names = TRUE)
+
+parallel_results <- foreach(vcf_file = vcf_files, .packages = "PathogenicityRanking") %dopar% {
+  annovar_to_pathogenicity_analysis(
+    input_file = vcf_file,
+    annovar_path = "/usr/local/annovar",
+    database_path = "/usr/local/annovar/humandb",
+    output_prefix = tools::file_path_sans_ext(basename(vcf_file)),
+    enhanced_analysis = FALSE  # Set to FALSE for faster processing
+  )
+}
+
+stopCluster(cl)
+```
+
+## Best Practices
+
+### 1. Data Management
+
+- **Organize outputs**: Use meaningful prefixes for different analyses
+- **Keep intermediate files**: During development and debugging
+- **Document parameters**: Record ANNOVAR versions and database dates
+
+### 2. Quality Control
+
+- **Validate annotations**: Check that key pathogenicity scores are present
+- **Review filtering**: Ensure missense filtering captures expected variants
+- **Compare results**: Cross-validate with other annotation tools
+
+### 3. Performance Optimization
+
+- **Use appropriate genome build**: Match your data's genome build
+- **Optimize database selection**: Only include needed databases
+- **Consider parallel processing**: For large datasets
+
+## Example Output Files
+
+After running the complete workflow, you'll have:
+
+```
+my_study_annovar_annotated.hg38_multianno.csv    # Full ANNOVAR annotations
+my_study_missense.csv                             # Filtered missense variants
+my_study_pathogenicity_ranking.pdf               # Basic ranking plot
+my_study_pathogenicity_heatmap.pdf               # Score heatmap
+my_study_pathogenicity_scatter_AlphaMissense.pdf # Scatter plots
+my_study_pathogenicity_distribution.pdf          # Score distribution
+composite_score_results.csv                      # Detailed results
+```
+
+## Conclusion
+
+The ANNOVAR integration in PathogenicityRanking provides a complete solution for variant analysis, from raw calls to publication-ready pathogenicity assessments. This workflow is particularly valuable for:
+
+- **Clinical genomics**: Prioritizing variants in patient samples
+- **Research studies**: Analyzing cohort-level variant data
+- **Functional genomics**: Identifying candidates for experimental validation
+
+## Support and Resources
+
+- **ANNOVAR Documentation**: http://annovar.openbioinformatics.org/
+- **PathogenicityRanking GitHub**: https://github.com/MohammadDeen/PathogenicityRanking
+- **Issues and Questions**: Use the GitHub issues page for support
+
+For questions about ANNOVAR integration, contact Mohammad Deen Hayatu at mohammaddeenhayatu@gmail.com.
