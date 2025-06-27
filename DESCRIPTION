@@ -9,3 +9,4 @@ License: MIT
 Encoding: UTF-8
 LazyData: true
 Imports: dplyr, ggplot2, readr, readxl, fs, tidyr
+Suggests: testthat (>= 3.0.0), knitr, rmarkdown
